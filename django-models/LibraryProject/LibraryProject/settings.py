@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'relationship_app',
     'bookshelf',
     'django.contrib.admin',
     'django.contrib.auth',
