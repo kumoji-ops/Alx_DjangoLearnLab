@@ -4,6 +4,7 @@ from django.shortcuts import redirect
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', lambda request: redirect('list_books')),  # Redirect root "/" to books
-    path('', include('relationship_app.urls')),        # Use URLs from your app
+    path('', lambda request: redirect('list_books')),
+    path('', include('relationship_app.urls')),
 ]
+
