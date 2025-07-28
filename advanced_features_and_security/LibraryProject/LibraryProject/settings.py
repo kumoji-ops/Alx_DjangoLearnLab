@@ -56,7 +56,7 @@ ROOT_URLCONF = 'LibraryProject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'relationship_app/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -124,5 +124,11 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = 'list_books'   # After login, go to the book list page
 LOGOUT_REDIRECT_URL = 'login'       # After logout, go back to login page
-
 AUTH_USER_MODEL = 'bookshelf.CustomUser'
+AUTH_USER_MODEL = 'accounts.CustomUser'
+
+import os
+TEMPLATES[0]['DIRS'] = [os.path.join(BASE_DIR, 'relationship_app/templates')]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
