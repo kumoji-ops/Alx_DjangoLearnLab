@@ -132,3 +132,64 @@ TEMPLATES[0]['DIRS'] = [os.path.join(BASE_DIR, 'relationship_app/templates')]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# SECURITY SETTINGS
+
+DEBUG = False  # NEVER use True in production
+
+ALLOWED_HOSTS = ['yourdomain.com', '127.0.0.1']
+
+# Prevent MIME-sniffing
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# Activate browser’s XSS filter
+SECURE_BROWSER_XSS_FILTER = True
+
+# Prevent clickjacking
+X_FRAME_OPTIONS = 'DENY'
+
+# Enforce HTTPS for cookies
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
+# Optional: Use secure HSTS header (HTTP Strict Transport Security)
+SECURE_HSTS_SECONDS = 31536000  # 1 year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+# Optional CSP middleware (see Step 4)
+INSTALLED_APPS += ['csp']
+MIDDLEWARE += ['csp.middleware.CSPMiddleware']
+
+# CSP basic setup (can be customized further)
+CSP_DEFAULT_SRC = ("'self'",)
+CSP_SCRIPT_SRC = ("'self'",)
+CSP_STYLE_SRC = ("'self'",)
+CSP_FONT_SRC = ("'self'",)
+CSP_IMG_SRC = ("'self'",)
+
+# === HTTPS & SSL CONFIGURATION ===
+
+# Redirect all HTTP requests to HTTPS
+SECURE_SSL_REDIRECT = True  # 🔐 Forces HTTPS
+
+# Enable HTTP Strict Transport Security (HSTS)
+SECURE_HSTS_SECONDS = 31536000  # 🔐 One year in seconds
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # 🔐 Include subdomains
+SECURE_HSTS_PRELOAD = True  # 🔐 Preload into browsers' HSTS lists
+
+# === Secure Cookie Settings ===
+
+# Ensures cookies are only transmitted via HTTPS
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
+
+# === Secure Headers ===
+
+X_FRAME_OPTIONS = 'DENY'  # Prevents clickjacking by disallowing iframe embedding
+
+SECURE_CONTENT_TYPE_NOSNIFF = True  # Stops MIME-type sniffing
+SECURE_BROWSER_XSS_FILTER = True  # Activates XSS protection in modern browsers
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
