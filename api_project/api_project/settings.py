@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'api',
-
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -51,6 +51,18 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+}
+# DRF Configuration: Using Token Authentication for all endpoints by default
+# Permissions: All views require authentication by default (IsAuthenticated)
+
 
 ROOT_URLCONF = 'api_project.urls'
 
