@@ -3,6 +3,7 @@ from rest_framework import generics, permissions, filters
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import Book
 from .serializers import BookSerializer
+from django_filters import rest_framework
 
 # List all books (Read-Only)
 class BookListView(generics.ListAPIView):
@@ -17,7 +18,7 @@ class BookListView(generics.ListAPIView):
     search_fields = ['title', 'author__name']
     ordering_fields = ['title', 'publication_year']
 
-    
+
 # Retrieve a single book by ID
 class BookDetailView(generics.RetrieveAPIView):
     queryset = Book.objects.all()
