@@ -1,6 +1,9 @@
 {% extends 'blog/base.html' %}
 {% block title %}All Posts{% endblock %}
 {% block content %}
+{% if tag %}
+    <h2>Posts tagged with "{{ tag }}"</h2>
+{% else %}
 <h2>All Blog Posts</h2>
 {% for post in posts %}
     <div>
