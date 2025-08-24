@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate, get_user_model
 from rest_framework import status, permissions
+from rest_framework import generics
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -54,19 +55,25 @@ class ProfileView(RetrieveUpdateAPIView):
 
     def get_object(self):
         return self.request.user
+    
+User = get_user_model()
 
-@api_view(['POST'])
-@permission_classes([IsAuthenticated])
-def follow_user(request, user_id):
-    target_user = get_object_or_404(User, id=user_id)
-    if target_user == request.user:
-        return Response({"error": "You cannot follow yourself."}, status=400)
-    request.user.following.add(target_user)
-    return Response({"status": f"You are now following {target_user.username}"})
 
-@api_view(['POST'])
-@permission_classes([IsAuthenticated])
-def unfollow_user(request, user_id):
-    target_user = get_object_or_404(User, id=user_id)
-    request.user.following.remove(target_user)
-    return Response({"status": f"You unfollowed {target_user.username}"})
+class FollowUserView(generics.GenericAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, user_id):
+        target_user = get_object_or_404(User, id=user_id)
+        if target_user == request.user:
+            return Response({"error": "You cannot follow yourself."}, status=400)
+        request.user.following.add(target_user)
+        return Response({"status": f"You are now following {target_user.username}"})
+
+
+class UnfollowUserView(generics.GenericAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, user_id):
+        target_user = get_object_or_404(User, id=user_id)
+        request.user.following.remove(target_user)
+        return Response({"status": f"You unfollowed {target_user.username}"})
