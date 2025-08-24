@@ -8,8 +8,8 @@ from rest_framework.generics import RetrieveUpdateAPIView
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
-
 from .serializers import RegistrationSerializer, UserSerializer
+from .models import User # Add this import if CustomUser is defined in models.py
 
 User = get_user_model()
 
@@ -68,7 +68,6 @@ class FollowUserView(generics.GenericAPIView):
             return Response({"error": "You cannot follow yourself."}, status=400)
         request.user.following.add(target_user)
         return Response({"status": f"You are now following {target_user.username}"})
-
 
 class UnfollowUserView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
